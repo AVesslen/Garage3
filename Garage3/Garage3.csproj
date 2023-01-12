@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Garage3.Core\Garage3.Core.csproj" />
+    <ProjectReference Include="..\Garage3.Data\Garage3.Data.csproj" />
+  </ItemGroup>
+
 </Project>
