@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Garage3.Data;
+using Garage3.Data.Data;
+
 namespace Garage3
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<Garage3Context>(options =>
@@ -15,6 +17,27 @@ namespace Garage3
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            // Seed data
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<Garage3Context>();
+
+                db.Database.EnsureDeleted();
+                db.Database.Migrate();
+
+                try
+                {
+                    await SeedData.InitAsync(db);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
+            }
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

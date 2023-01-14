@@ -48,8 +48,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="VehicleTypeID" class="control-label"></label>
-                <select asp-for="VehicleTypeID" class ="form-control" asp-items="ViewBag.VehicleTypeID"></select>
+                <select asp-for="VehicleTypeID" class="form-control" asp-items="ViewBag.VehicleTypeID"></select>
             </div>
+           @* <div class="form-group"> // Om användaren själv ska kunna fylla i fordonstyp
+                <label asp-for="VehicleType" class="control-label"></label>
+                <input asp-for="VehicleType" class ="form-control" asp-items="ViewBag.VehicleType">
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
