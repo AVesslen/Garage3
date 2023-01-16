@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Garage3.Data;
 using Garage3.Data.Data;
+using Garage3.AutoMapper;
 
 namespace Garage3
 {
@@ -15,6 +16,8 @@ namespace Garage3
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
 
             var app = builder.Build();
 

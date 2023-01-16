@@ -7,27 +7,61 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3.Core;
 using Garage3.Data;
+using Garage3.ViewModels;
+using AutoMapper;
+using Bogus;
 
 namespace Garage3.Controllers
 {
     public class MembersController : Controller
     {
         private readonly Garage3Context _context;
+        private readonly IMapper mapper;
 
-        public MembersController(Garage3Context context)
+        public MembersController(Garage3Context context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
-        // GET: Members
+        // GET: Members  
         public async Task<IActionResult> Index()
         {
-              return _context.Member != null ? 
-                          View(await _context.Member.ToListAsync()) :
-                          Problem("Entity set 'Garage3Context.Member'  is null.");
+            //var viewModel = await _context.Member.Select(m => new MemberIndexViewModel  // "Gamla sättet"
+            //{
+            //    Id = m.Id,
+            //    FirstName = m.FirstName,
+            //    LastName = m.LastName,
+            //    NrOfVehicles = m.Vehicles.Count
+            //}).ToListAsync();
+
+            var viewModel = await mapper.ProjectTo<MemberIndexViewModel>(_context.Member)  // Med AutoMapper
+                .ToListAsync();
+
+            return View(viewModel);
         }
 
+
         // GET: Members/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Member == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var member = await _context.Member
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (member == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(member);
+        //}
+
+
+        // GET: Members/Details/5   //Med AutoMapper
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Member == null)
@@ -35,8 +69,9 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
+            var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (member == null)
             {
                 return NotFound();
@@ -44,6 +79,8 @@ namespace Garage3.Controllers
 
             return View(member);
         }
+
+
 
         // GET: Members/Create
         public IActionResult Create()
