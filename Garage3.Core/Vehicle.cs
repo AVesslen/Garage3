@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Garage3.Core
 {
     public class Vehicle
@@ -19,8 +21,8 @@ namespace Garage3.Core
         public bool IsParked { get; set; }
 
         // Navigation properties
-        public VehicleType VehicleType { get; set; } = new VehicleType();
-        public Member Member { get; set; } = new Member();
+        public VehicleType VehicleType { get; set; } // = new VehicleType();
+        public Member Member { get; set; } // = new Member();
 
         // Foreign keys
         public int MemberID { get; set; }
