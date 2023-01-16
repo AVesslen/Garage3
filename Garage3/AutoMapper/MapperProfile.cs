@@ -17,6 +17,8 @@ namespace Garage3.AutoMapper
                 .ForMember(
                     dest => dest.NrOfVehicles,
                     from => from.MapFrom(m => m.Vehicles.Count));
+            CreateMap<Vehicle, VehicleIndexViewModel>();
+            CreateMap<Vehicle, VehicleDetailsViewModel>();
 
         }
 

@@ -7,24 +7,42 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3.Core;
 using Garage3.Data;
+using AutoMapper;
+using Garage3.ViewModels;
 
 namespace Garage3.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly Garage3Context _context;
+        private readonly IMapper mapper;
 
-        public VehiclesController(Garage3Context context)
+        public VehiclesController(Garage3Context context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
+        //// GET: Vehicles
+        //public async Task<IActionResult> Index()  // Default
+        //{
+        //    var garage3Context = _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType);
+        //    return View(await garage3Context.ToListAsync());
+        //}
+
+
         // GET: Vehicles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()  // Med AutoMapper
         {
-            var garage3Context = _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType);
-            return View(await garage3Context.ToListAsync());
+            //var garage3Context = _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType);
+            //return View(await garage3Context.ToListAsync());
+
+            var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)
+           .OrderByDescending(s => s.Id)
+           .ToListAsync();
+            return View(viewModel);
         }
+
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -34,10 +52,14 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle
-                .Include(v => v.Member)
-                .Include(v => v.VehicleType)
+            //var vehicle = await _context.Vehicle           
+            //.Include(v => v.Member)
+            //.Include(v => v.VehicleType)
+            //.FirstOrDefaultAsync(m => m.Id == id);
+
+            var vehicle = await mapper.ProjectTo<VehicleDetailsViewModel>(_context.Vehicle)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (vehicle == null)
             {
                 return NotFound();
