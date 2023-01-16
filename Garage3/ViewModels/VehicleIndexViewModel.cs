@@ -23,7 +23,14 @@ namespace Garage3.ViewModels
         [Display(Name = "Ägare")]
         public Member? Member { get; set; } // = new Member();
 
-     
+        [Display(Name = "Ankomsttid")]
+        public DateTime ArrivalTime { get; set; }
+
+        [Display(Name = "Parkerad tid")]
+        [DisplayFormat(DataFormatString = "{0:%d}d {0:%h}t {0:%m}m")]
+        public TimeSpan ParkedTime { get; set; }
+
+
 
 
 

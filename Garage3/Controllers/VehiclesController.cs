@@ -38,6 +38,7 @@ namespace Garage3.Controllers
             //return View(await garage3Context.ToListAsync());
 
             var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)
+                .Where(s => s.IsParked ==true)
            .OrderByDescending(s => s.Id)
            .ToListAsync();
             return View(viewModel);
