@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Garage3.Core;
 using System.ComponentModel.DataAnnotations;
-using Vehicle = Garage3.Core.Vehicle;
+//using Vehicle = Garage3.Core.Vehicle;
 
 #nullable disable
 

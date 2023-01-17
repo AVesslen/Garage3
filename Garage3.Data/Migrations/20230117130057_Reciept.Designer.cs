@@ -4,6 +4,7 @@ using Garage3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Data.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    partial class Garage3ContextModelSnapshot : ModelSnapshot
+    [Migration("20230117130057_Reciept")]
+    partial class Reciept
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member", (string)null);
+                    b.ToTable("Member");
                 });
 
             modelBuilder.Entity("Garage3.Core.Receipt", b =>
@@ -77,7 +80,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasIndex("VehicleTypeId");
 
-                    b.ToTable("Receipt", (string)null);
+                    b.ToTable("Receipt");
                 });
 
             modelBuilder.Entity("Garage3.Core.Vehicle", b =>
@@ -118,7 +121,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasIndex("VehicleTypeID");
 
-                    b.ToTable("Vehicle", (string)null);
+                    b.ToTable("Vehicle");
                 });
 
             modelBuilder.Entity("Garage3.Core.VehicleType", b =>
@@ -134,7 +137,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleType", (string)null);
+                    b.ToTable("VehicleType");
                 });
 
             modelBuilder.Entity("Garage3.Core.Receipt", b =>

@@ -18,16 +18,13 @@ namespace Garage3.Core
         public int Price { get; set; }
         public int PriceTotal { get; set; }
 
-        // Navigation properties
-        //public Vehicle Vehicles { get; set; }
         
-        //public Member Member { get; set; }
+        public Member Member { get; set; } // Navigation properties
+        public int MemberId { get; set; } //FK
 
-        //// Foreign keys
-        //public int VehicleId { get; set; }
-        
-        //public int MemberID { get; set; }
 
+        public Vehicle Vehicle { get; set; } // Navigation properties
+        public int VehicleId { get; set; } //FK
 
     }
 }

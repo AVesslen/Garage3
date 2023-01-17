@@ -128,52 +128,6 @@ namespace Garage3.Controllers
             return View(vehicle);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Receipt(int id)
-        {
-            if (_context.Vehicle == null)
-            {
-                return Problem("Entity set 'Garage3Context.Vehicle' is null.");
-            }
-            var Vehicle = await _context.Vehicle.FindAsync(id);
-
-            //Får vi tillbaks ett fordon att ta bort? Hanterar null
-
-            if (Vehicle is null)
-            {
-                return NotFound();
-            }
-
-            _context.Vehicle.Update(Vehicle);
-            await _context.SaveChangesAsync();
-
-            var price = Price.GetPrice;
-
-            DateTime timeExit = DateTime.Now;
-
-            TimeSpan span = timeExit.Subtract(Vehicle.ArrivalTime);
-            var spanInMinutes = span.TotalMinutes;
-            var totalPrice = spanInMinutes * price / 60;
-
-            //Create model for receipt
-            //Add information from vehicle to model
-            //Send model to Receipt View
-            var model = new ReceiptViewModel
-            {
-                Id = id,
-                RegNo = Vehicle.RegNo,
-                VehicleType = Vehicle.VehicleType,
-                TimeEnter = Vehicle.ArrivalTime,
-                TimeExit = timeExit,
-                Price = price,
-                PriceTotal = (int)totalPrice,
-
-            };
-
-            return View(model);
-        }
-
         // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
