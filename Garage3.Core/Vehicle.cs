@@ -20,14 +20,16 @@ namespace Garage3.Core
         public DateTime ArrivalTime { get; set; }
         public bool IsParked { get; set; }
 
-        // Navigation properties
-        public VehicleType VehicleType { get; set; } // = new VehicleType();
-        public Member Member { get; set; } // = new Member();
+        
+        public VehicleType VehicleType { get; set; } // Navigation properties
+        public int VehicleTypeID { get; set; } // Foreign keys
+        
+        public Member Member { get; set; } // Navigation properties
+        public int MemberID { get; set; } // FK
 
-        // Foreign keys
-        public int MemberID { get; set; }
-        public int VehicleTypeID { get; set; }
 
+        public ICollection<Receipt> Receipts { get; set; } // Navigation properties
+        //public Receipt Receipt { get; set; }
 
     }
 }

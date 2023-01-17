@@ -18,8 +18,10 @@ namespace Garage3.Core
         public string PersonalNo { get; set; } = string.Empty;
 
 
-        // Navigation properties
+        public ICollection<Vehicle> Vehicles { get; set; } // Navigation properties
 
-        public ICollection<Vehicle> Vehicles { get; set; } // = new List<Vehicle>();
+        public ICollection<Receipt> Receipts { get; set; } // Navigation properties
+        //public Receipt Receipt { get; set; }
+
     }
 }
