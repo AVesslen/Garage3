@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Receipt.cs-" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Receipt.cs-" />
+  </ItemGroup>
+
 </Project>

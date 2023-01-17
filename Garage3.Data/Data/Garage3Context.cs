@@ -16,6 +16,7 @@ namespace Garage3.Data
         public DbSet<Garage3.Core.Member> Member { get; set; } //= default!;
 
         public DbSet<Garage3.Core.Vehicle> Vehicle { get; set; } //= default!;
+        //public DbSet<Garage3.Core.Receipt> Receipt { get; set; } //= default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

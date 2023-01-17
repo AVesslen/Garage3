@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage3", "Garage3\Garage3.csproj", "{0187643F-B616-4A78-BBB4-7C424814929A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Garage3", "Garage3\Garage3.csproj", "{0187643F-B616-4A78-BBB4-7C424814929A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage3.Core", "Garage3.Core\Garage3.Core.csproj", "{D535E610-5DE1-48DA-AF8D-3CA0C5F49969}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Garage3.Core", "Garage3.Core\Garage3.Core.csproj", "{D535E610-5DE1-48DA-AF8D-3CA0C5F49969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage3.Data", "Garage3.Data\Garage3.Data.csproj", "{9F44C6F5-70DD-4C17-BA6D-DE6BA94DB704}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Garage3.Data", "Garage3.Data\Garage3.Data.csproj", "{9F44C6F5-70DD-4C17-BA6D-DE6BA94DB704}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

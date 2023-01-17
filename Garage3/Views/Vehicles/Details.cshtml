@@ -60,6 +60,15 @@
         </dd>
     </dl>
 </div>
+
+    <div class="my-3">
+    <form asp-action="Receipt" method="post">
+    <input type="hidden" asp-for="Id"/>
+    <input type="submit" value="Checka ut med kvitto" class="btn btn-outline-primary" />
+    </form>
+    </div>
+
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
     <a asp-action="Index">Tillbaka</a>

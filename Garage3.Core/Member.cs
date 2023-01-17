@@ -21,5 +21,7 @@ namespace Garage3.Core
         // Navigation properties
 
         public ICollection<Vehicle> Vehicles { get; set; } // = new List<Vehicle>();
+        
+
     }
 }
