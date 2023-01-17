@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Elfie.Serialization;
 using Garage3.Core;
 using Garage3.ViewModels;
 
@@ -16,12 +17,13 @@ namespace Garage3.AutoMapper
             CreateMap<Member, MemberDetailsViewModel>()
                 .ForMember(
                     dest => dest.NrOfVehicles,
-                    from => from.MapFrom(m => m.Vehicles.Count));
+                    from => from.MapFrom(m => m.Vehicles.Count));     
             CreateMap<Vehicle, VehicleIndexViewModel>()
                 .ForMember(
                     dest => dest.ParkedTime,
                     from => from.MapFrom(m => m.ArrivalTime.Subtract(DateTime.Now)));
             CreateMap<Vehicle, VehicleDetailsViewModel>();
+            CreateMap<Vehicle, VehicleCreateViewModel>().ReverseMap();
         }
 
 

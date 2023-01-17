@@ -17,7 +17,7 @@ namespace Garage3.ViewModels
         [Display(Name = "Märke")]
         public string Brand { get; set; } = string.Empty;             
 
-        [Display(Name = "Status")]
+        [Display(Name = "Parkeringsstatus")]
         public bool IsParked { get; set; }
 
         [Display(Name = "Ägare")]

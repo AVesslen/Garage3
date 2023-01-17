@@ -27,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Member)
             </th>                        
+            <th>
+                @Html.DisplayNameFor(model => model.IsParked)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,10 +52,26 @@
                 @Html.DisplayFor(modelItem => item.Member.FirstName)
                 @Html.DisplayFor(modelItem => item.Member.LastName)
             </td>
-            <td>
+                <td>
+                    @if (item.IsParked == true)
+                    {
+                        <p>Parkerad</p>
+                    }
+                    else { <p>Ej parkerad</p>}
+                   
+                </td>
+            <td>               
                 <a asp-action="Edit" asp-route-id="@item.Id">Ändra</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Avregistrera</a>
+                    @if (item.IsParked == true)
+                    {
+                        <a asp-actions="Park" asp-route-id="@item.Id">Checka ut</a>
+                    }
+                    else
+                    {
+                        <a asp-actions="Park" asp-route-id="@item.Id">Parkera</a>
+                    }
             </td>
         </tr>
 }

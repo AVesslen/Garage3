@@ -71,6 +71,7 @@ namespace Garage3.Controllers
 
             var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
                 .FirstOrDefaultAsync(m => m.Id == id);
+           
 
             if (member == null)
             {
