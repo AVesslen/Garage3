@@ -23,7 +23,7 @@ namespace Garage3.ViewModels
         [Display(Name = "Ankomsttid")]
         public DateTime ArrivalTime { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Parkerad")]
         public bool IsParked { get; set; }
 
         [Display(Name = "Fordonstyp")]

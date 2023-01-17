@@ -100,22 +100,41 @@ namespace Garage3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(vehicle);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["MemberID"] = new SelectList(_context.Member, "Id", "FirstName", vehicle.MemberID);
-            //ViewData["VehicleTypeID"] = new SelectList(_context.Set<VehicleType>(), "Id", "Type", vehicle.VehicleTypeID);
-            //return View(vehicle);
-
             var vehicle = mapper.Map<Vehicle>(viewModel);
             vehicle.ArrivalTime = DateTime.Now;
             _context.Add(vehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+
+        public async Task<IActionResult> Park(int? id)
+        {
+            if (id == null || _context.Vehicle == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicle.FindAsync(id);
+
+            if (vehicle.IsParked == true)            // Checkar ut
+            {
+                vehicle.IsParked = false;
+                vehicle.ArrivalTime = DateTime.MinValue;
+            }
+            else
+            {
+                vehicle.IsParked = true;
+                vehicle.ArrivalTime = DateTime.Now;           // Parkerar
+            }
+
+            _context.Update(vehicle);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            //return View(nameof(Index));
+        }
+
 
 
         // GET: Vehicles/Edit/5
