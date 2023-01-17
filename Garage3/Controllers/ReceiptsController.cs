@@ -172,9 +172,8 @@ namespace Garage3.Controllers
             {
                 return NotFound();
             }
-
-            _context.Vehicle.Remove(Vehicle);
-            await _context.SaveChangesAsync();
+            Vehicle.IsParked = false;
+            _context.Vehicle.Update(Vehicle);
 
             var price = Price.GetPrice;
 
@@ -187,6 +186,22 @@ namespace Garage3.Controllers
             //Create model for receipt
             //Add information from vehicle to model
             //Send model to Receipt View
+            var reciept = new Receipt
+            {
+                RegNo = Vehicle.RegNo,
+                VehicleType = Vehicle.VehicleType,
+                TimeEnter = Vehicle.ArrivalTime,
+                TimeExit = timeExit,
+                Price = price,
+                PriceTotal = (int)totalPrice,
+                MemberId = Vehicle.MemberID,
+                VehicleId = Vehicle.Id
+
+            };
+
+            _context.Add(reciept);
+            await _context.SaveChangesAsync();
+            
             var model = new ReceiptViewModel
             {
                 Id = id,

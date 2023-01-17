@@ -24,7 +24,11 @@ namespace Garage3.Data
             modelBuilder.Entity<Vehicle>()
                 .HasOne(o => o.Member)
                 .WithMany(c => c.Vehicles);
-                //.HasForeignKey(o => o.MemberID);
+            //.HasForeignKey(o => o.MemberID);
+
+            //modelBuilder.Entity<Receipt>()
+            //    .HasOne(o => o.Member)
+            //    .WithMany(c => c.r);
         }
     }
 }
