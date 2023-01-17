@@ -26,7 +26,7 @@ namespace Garage3.Core
         [Display(Name = "Färg"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string Color { get; set; } = string.Empty;
 
-        [Display(Name = "Ankomsttid"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
+        [Display(Name = "Ankomsttid")]
         public DateTime ArrivalTime { get; set; }
 
         //[Display(Name = "Parkeringsstatus")]
@@ -43,6 +43,8 @@ namespace Garage3.Core
         public int MemberID { get; set; }
         public int VehicleTypeID { get; set; }
 
+        public ICollection<Receipt> Receipts { get; set; } // Navigation properties
+        //public Receipt Receipt { get; set; }
 
     }
 }
