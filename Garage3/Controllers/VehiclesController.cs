@@ -126,13 +126,12 @@ namespace Garage3.Controllers
             else
             {
                 vehicle.IsParked = true;
-                vehicle.ArrivalTime = DateTime.Now;           // Parkerar
+                vehicle.ArrivalTime = DateTime.Now;   // Parkerar
             }
 
             _context.Update(vehicle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-            //return View(nameof(Index));
+            return RedirectToAction(nameof(Index));          
         }
 
 

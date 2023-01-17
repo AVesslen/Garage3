@@ -27,7 +27,7 @@ namespace Garage3.ViewModels
         public DateTime ArrivalTime { get; set; }
 
         [Display(Name = "Parkerad tid")]
-        [DisplayFormat(DataFormatString = "{0:%d}d {0:%h}t {0:%m}m")]
+        [DisplayFormat(DataFormatString = "{0:%h}t {0:%m}m")]  //  [DisplayFormat(DataFormatString = "{0:%d}d {0:%h}t {0:%m}m")]
         public TimeSpan ParkedTime { get; set; }
 
 

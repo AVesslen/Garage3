@@ -46,7 +46,15 @@
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ParkedTime)
+                    @if (item.IsParked == true)
+                    {
+                        @Html.DisplayFor(modelItem => item.ParkedTime)                   
+                    }
+                    else 
+                    {
+                      <p>-</p>
+                    }
+
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Member.FirstName)
