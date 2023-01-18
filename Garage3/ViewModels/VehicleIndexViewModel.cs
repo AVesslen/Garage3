@@ -17,7 +17,7 @@ namespace Garage3.ViewModels
         [Display(Name = "Märke")]
         public string Brand { get; set; } = string.Empty;             
 
-        [Display(Name = "Status")]
+        [Display(Name = "Parkeringsstatus")]
         public bool IsParked { get; set; }
 
         [Display(Name = "Ägare")]
@@ -27,7 +27,7 @@ namespace Garage3.ViewModels
         public DateTime ArrivalTime { get; set; }
 
         [Display(Name = "Parkerad tid")]
-        [DisplayFormat(DataFormatString = "{0:%d}d {0:%h}t {0:%m}m")]
+        [DisplayFormat(DataFormatString = "{0:%h}t {0:%m}m")]  //  [DisplayFormat(DataFormatString = "{0:%d}d {0:%h}t {0:%m}m")]
         public TimeSpan ParkedTime { get; set; }
 
 

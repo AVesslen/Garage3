@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Garage3.ViewModels
 {
-    public class VehicleDetailsViewModel
+    public class VehicleCreateViewModel
     {
+
         public int Id { get; set; }
 
         [Display(Name = "Registreringsnummer")]
@@ -20,17 +21,20 @@ namespace Garage3.ViewModels
         [Display(Name = "Färg")]
         public string Color { get; set; } = string.Empty;
 
-        [Display(Name = "Ankomsttid")]
-        public DateTime ArrivalTime { get; set; }
+        //[Display(Name = "Ankomsttid")]
+        //public DateTime ArrivalTime { get; set; }
 
-        [Display(Name = "Parkerad")]
+        [Display(Name = "Parkera direkt")]
         public bool IsParked { get; set; }
 
         [Display(Name = "Fordonstyp")]
-        public VehicleType? VehicleType { get; set; } // = new VehicleType();
+        //public VehicleType? VehicleType { get; set; } // = new VehicleType();
+        public int VehicleTypeId { get; set; } 
 
         [Display(Name = "Ägare")]
-        public Member? Member { get; set; } // = new Member();
+        public int MemberId { get; set; } // = new Member();
+
+
 
     }
 }

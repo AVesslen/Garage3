@@ -10,6 +10,7 @@ using Garage3.Data;
 using Garage3.ViewModels;
 using AutoMapper;
 using Bogus;
+using Bogus.DataSets;
 
 namespace Garage3.Controllers
 {
@@ -71,6 +72,7 @@ namespace Garage3.Controllers
 
             var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
                 .FirstOrDefaultAsync(m => m.Id == id);
+           
 
             if (member == null)
             {
@@ -99,6 +101,7 @@ namespace Garage3.Controllers
             {
                 _context.Add(member);
                 await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = $"{member.FirstName} har registrerats som medlem.";
                 return RedirectToAction(nameof(Index));
             }
             return View(member);
@@ -182,10 +185,23 @@ namespace Garage3.Controllers
             {
                 return Problem("Entity set 'Garage3Context.Member'  is null.");
             }
+
             var member = await _context.Member.FindAsync(id);
             if (member != null)
             {
+                //if (member.Vehicles.Count > 0)
+                //{
+                //    foreach (var vehicle in member.Vehicles)
+                //    {
+                //        if (vehicle.IsParked == true)
+                //        { 
+                //        TempData["AlertMessage"] = $"Du måste checka ut dina fordon innan du kan avregistrera dig.";
+                //        return RedirectToAction(nameof(Index));
+                //        }
+                //    }
+                //}
                 _context.Member.Remove(member);
+                TempData["AlertMessage"] = $"{member.FirstName} har raderats ur registret.";
             }
             
             await _context.SaveChangesAsync();

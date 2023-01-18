@@ -38,7 +38,7 @@ namespace Garage3.Controllers
             //return View(await garage3Context.ToListAsync());
 
             var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)
-                .Where(s => s.IsParked ==true)
+               // .Where(s => s.IsParked ==true)
            .OrderByDescending(s => s.Id)
            .ToListAsync();
             return View(viewModel);
@@ -77,23 +77,68 @@ namespace Garage3.Controllers
             return View();
         }
 
-        // POST: Vehicles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Vehicles/Create      
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,RegNo,Brand,VehicleModel,Color,ArrivalTime,IsParked,MemberID,VehicleTypeID")] Vehicle vehicle)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        vehicle.ArrivalTime = DateTime.Now;
+        //        _context.Add(vehicle);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["MemberID"] = new SelectList(_context.Member, "Id", "FirstName", vehicle.MemberID);
+        //    ViewData["VehicleTypeID"] = new SelectList(_context.Set<VehicleType>(), "Id", "Type", vehicle.VehicleTypeID);
+        //    return View(vehicle);
+        //}
+
+
+        // POST: Vehicles/Create      // Med AutoMapper
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNo,Brand,VehicleModel,Color,ArrivalTime,IsParked,MemberID,VehicleTypeID")] Vehicle vehicle)
+        public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(vehicle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MemberID"] = new SelectList(_context.Member, "Id", "FirstName", vehicle.MemberID);
-            ViewData["VehicleTypeID"] = new SelectList(_context.Set<VehicleType>(), "Id", "Type", vehicle.VehicleTypeID);
-            return View(vehicle);
+            var vehicle = mapper.Map<Vehicle>(viewModel);
+            vehicle.ArrivalTime = DateTime.Now;
+            _context.Add(vehicle);
+            await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har registrerats.";
+            return RedirectToAction(nameof(Index));
         }
+
+
+
+        public async Task<IActionResult> Park(int? id)
+        {
+            if (id == null || _context.Vehicle == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicle.FindAsync(id);
+
+            if (vehicle.IsParked == true)            // Checkar ut
+            {
+                vehicle.IsParked = false;
+                vehicle.ArrivalTime = DateTime.MinValue;
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har checkats ut.";
+
+            }
+            else
+            {
+                vehicle.IsParked = true;
+                vehicle.ArrivalTime = DateTime.Now;   // Parkerar
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har parkerats.";
+            }
+
+            _context.Update(vehicle);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));          
+        }
+
+
 
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -131,6 +176,7 @@ namespace Garage3.Controllers
                 {
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har ändrats.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -183,9 +229,10 @@ namespace Garage3.Controllers
             if (vehicle != null)
             {
                 _context.Vehicle.Remove(vehicle);
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har avregistrerats.";
             }
             
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();            
             return RedirectToAction(nameof(Index));
         }
 

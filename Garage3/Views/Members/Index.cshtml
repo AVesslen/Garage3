@@ -10,6 +10,14 @@
 <p>
     <a asp-action="Create">Registrera medlem</a>
 </p>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["AlertMessage"]
+    </div>
+}
+
 <table class="table">
     <thead>
         <tr>
