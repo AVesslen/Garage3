@@ -91,19 +91,5 @@ namespace Garage3.Data.Data
 
             return vehicles;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

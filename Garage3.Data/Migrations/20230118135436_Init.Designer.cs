@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Data.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20230117130057_Reciept")]
-    partial class Reciept
+    [Migration("20230118135436_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace Garage3.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -73,10 +76,17 @@ namespace Garage3.Data.Migrations
                     b.Property<DateTime>("TimeExit")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("VehicleTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("VehicleId");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -95,9 +105,11 @@ namespace Garage3.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Brand")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsParked")
@@ -107,9 +119,12 @@ namespace Garage3.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RegNo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("VehicleModel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VehicleTypeID")
@@ -142,9 +157,25 @@ namespace Garage3.Data.Migrations
 
             modelBuilder.Entity("Garage3.Core.Receipt", b =>
                 {
+                    b.HasOne("Garage3.Core.Member", "Member")
+                        .WithMany("Receipts")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Garage3.Core.Vehicle", "Vehicle")
+                        .WithMany("Receipts")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Garage3.Core.VehicleType", "VehicleType")
                         .WithMany()
                         .HasForeignKey("VehicleTypeId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Vehicle");
 
                     b.Navigation("VehicleType");
                 });
@@ -170,7 +201,14 @@ namespace Garage3.Data.Migrations
 
             modelBuilder.Entity("Garage3.Core.Member", b =>
                 {
+                    b.Navigation("Receipts");
+
                     b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("Garage3.Core.Vehicle", b =>
+                {
+                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("Garage3.Core.VehicleType", b =>
