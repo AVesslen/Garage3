@@ -104,6 +104,7 @@ namespace Garage3.Controllers
             vehicle.ArrivalTime = DateTime.Now;
             _context.Add(vehicle);
             await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har registrerats.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -122,11 +123,14 @@ namespace Garage3.Controllers
             {
                 vehicle.IsParked = false;
                 vehicle.ArrivalTime = DateTime.MinValue;
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har checkats ut.";
+
             }
             else
             {
                 vehicle.IsParked = true;
                 vehicle.ArrivalTime = DateTime.Now;   // Parkerar
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har parkerats.";
             }
 
             _context.Update(vehicle);
@@ -172,6 +176,7 @@ namespace Garage3.Controllers
                 {
                     _context.Update(vehicle);
                     await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har ändrats.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -224,9 +229,10 @@ namespace Garage3.Controllers
             if (vehicle != null)
             {
                 _context.Vehicle.Remove(vehicle);
+                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har avregistrerats.";
             }
             
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();            
             return RedirectToAction(nameof(Index));
         }
 
