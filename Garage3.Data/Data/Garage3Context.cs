@@ -19,16 +19,11 @@ namespace Garage3.Data
 
         public DbSet<Garage3.Core.Receipt> Receipt { get; set; } //= default!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Vehicle>()
-                .HasOne(o => o.Member)
-                .WithMany(c => c.Vehicles);
-            //.HasForeignKey(o => o.MemberID);
-
-            //modelBuilder.Entity<Receipt>()
-            //    .HasOne(o => o.Member)
-            //    .WithMany(c => c.r);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Vehicle>()
+        //        .HasOne(o => o.Member)
+        //        .WithMany(c => c.Vehicles);
+        //}
     }
 }
