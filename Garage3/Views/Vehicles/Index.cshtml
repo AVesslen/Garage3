@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Registrera fordon</a>
 </p>
+
 @if (TempData["AlertMessage"] != null)
 {
     <div class="alert alert-success" role="alert">
@@ -83,13 +84,13 @@
                     
                     @if (item.IsParked == true)
                     {
-                        <a asp-action="Park" asp-route-id="@item.Id">Checka ut</a>
+                        <a asp-action="Receipt" asp-controller="Receipts" asp-route-id="@item.Id">Checka ut</a>                                                      
                     }
                     else
                     {
                         <a asp-action="Park" asp-route-id="@item.Id">Parkera</a>
                     }
-            </td>
+            </td> 
         </tr>
 }
     </tbody>

@@ -34,11 +34,7 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()  // Med AutoMapper
         {
-            //var garage3Context = _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType);
-            //return View(await garage3Context.ToListAsync());
-
-            var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)
-               // .Where(s => s.IsParked ==true)
+            var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)              
            .OrderByDescending(s => s.Id)
            .ToListAsync();
             return View(viewModel);
@@ -52,11 +48,6 @@ namespace Garage3.Controllers
             {
                 return NotFound();
             }
-
-            //var vehicle = await _context.Vehicle           
-            //.Include(v => v.Member)
-            //.Include(v => v.VehicleType)
-            //.FirstOrDefaultAsync(m => m.Id == id);
 
             var vehicle = await mapper.ProjectTo<VehicleDetailsViewModel>(_context.Vehicle)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -75,27 +66,9 @@ namespace Garage3.Controllers
             ViewData["MemberID"] = new SelectList(_context.Member, "Id", "FirstName");
             ViewData["VehicleTypeID"] = new SelectList(_context.Set<VehicleType>(), "Id", "Type");
             return View();
-        }
+        } 
 
         // POST: Vehicles/Create      
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,RegNo,Brand,VehicleModel,Color,ArrivalTime,IsParked,MemberID,VehicleTypeID")] Vehicle vehicle)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        vehicle.ArrivalTime = DateTime.Now;
-        //        _context.Add(vehicle);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["MemberID"] = new SelectList(_context.Member, "Id", "FirstName", vehicle.MemberID);
-        //    ViewData["VehicleTypeID"] = new SelectList(_context.Set<VehicleType>(), "Id", "Type", vehicle.VehicleTypeID);
-        //    return View(vehicle);
-        //}
-
-
-        // POST: Vehicles/Create      // Med AutoMapper
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
@@ -109,7 +82,6 @@ namespace Garage3.Controllers
         }
 
 
-
         public async Task<IActionResult> Park(int? id)
         {
             if (id == null || _context.Vehicle == null)
@@ -117,27 +89,17 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle.FindAsync(id);
-
-            if (vehicle.IsParked == true)            // Checkar ut
-            {
-                vehicle.IsParked = false;
-                vehicle.ArrivalTime = DateTime.MinValue;
-                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har checkats ut.";
-
-            }
-            else
-            {
-                vehicle.IsParked = true;
-                vehicle.ArrivalTime = DateTime.Now;   // Parkerar
-                TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har parkerats.";
-            }
+            var vehicle = await _context.Vehicle.FindAsync(id);        
+           
+            vehicle.IsParked = true;
+            vehicle.ArrivalTime = DateTime.Now;                        
 
             _context.Update(vehicle);
             await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har parkerats.";
+
             return RedirectToAction(nameof(Index));          
         }
-
 
 
         // GET: Vehicles/Edit/5
@@ -158,9 +120,7 @@ namespace Garage3.Controllers
             return View(vehicle);
         }
 
-        // POST: Vehicles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Vehicles/Edit/5        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RegNo,Brand,VehicleModel,Color,ArrivalTime,IsParked,MemberID,VehicleTypeID")] Vehicle vehicle)

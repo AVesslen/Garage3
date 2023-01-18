@@ -40,23 +40,12 @@
         </dt>
         <dd class="col-sm-2">
             @foreach (var item in Model.Vehicles)
-            {
-                @* @Html.DisplayFor(item => item.VehicleType.Type)*@
-                <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@item.Id">@item.Brand</a>                              
+            {               
+                 @Html.DisplayFor(modelItem => item.Brand)
+                @*<a asp-controller="Vehicles" asp-action="Details" asp-route-id="@item.Id">@item.Brand</a>  *@                            
                 <br/>           
-            }
-          @*  <dd class="col-sm-8">
-                @foreach (var item in Model.Vehicles)
-                {                  
-                    if (item.IsParked == true)
-                    {
-                      <p>Parkerad</p>
-                    } 
-                    else {<p>Ej parkerad</p>}
-                    <br/>           
-                }*@
-        </dd>
-        </dd>
+            }         
+        </dd>        
     </dl>
 </div>
 <div>

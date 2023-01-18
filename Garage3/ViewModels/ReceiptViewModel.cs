@@ -27,10 +27,16 @@ namespace Garage3.Core
         [Display(Name = "Utcheckning")]
         public DateTime TimeExit { get; set; }
 
-        [Display(Name = "Timpris (kr)")]
+        [Display(Name = "Avgift")]
         public int Price { get; set; }
 
-        [Display(Name = "Att betala (kr)")]
+        [Display(Name = "Att betala")]
         public int PriceTotal { get; set; }
+
+        [Display(Name = "Medlem")]
+        public Member Member { get; set; }
+
+        public Vehicle Vehicle { get; set; }
+
     }
 }

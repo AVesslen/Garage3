@@ -44,10 +44,10 @@ namespace Garage3.Data.Data
                 var member = new Member
                 {
                     FirstName = fName,
-                    LastName = lName,
-                    MemberNo = memberNo,
+                    LastName = lName,                   
                     PersonalNo = personalNo,
-                    Vehicles = vehicles.ToList(),                    
+                    Vehicles = vehicles.ToList(),   
+                    MemberNo = memberNo,
                 };
 
                 members.Add(member);

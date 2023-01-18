@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garage3.Core;
 using Garage3.Data;
 using Garage3.Views.Vehicles;
+using Garage3.Data.Migrations;
 
 namespace Garage3.Controllers
 {
-    public class ReceiptsController : Controller
+    public class ReceiptsController : Controller 
     {
         private readonly Garage3Context _context;
 
@@ -156,64 +157,68 @@ namespace Garage3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Receipt(int id)
         {
             if (_context.Vehicle == null)
             {
                 return Problem("Entity set 'Garage3Context.Vehicle' is null.");
             }
-            var Vehicle = await _context.Vehicle.FindAsync(id);
+            //var vehicle = await _context.Vehicle.FindAsync(id)
+
+
+                 var vehicle = await _context.Vehicle
+                .Include(v => v.Member)
+                .Include(v => v.VehicleType)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             //Får vi tillbaks ett fordon att ta bort? Hanterar null
 
-            if (Vehicle is null)
+            if (vehicle is null)
             {
                 return NotFound();
             }
-            Vehicle.IsParked = false;
-            _context.Vehicle.Update(Vehicle);
+            vehicle.IsParked = false;
+            _context.Vehicle.Update(vehicle);
+            TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har checkats ut.";
 
             var price = Price.GetPrice;
 
             DateTime timeExit = DateTime.Now;
-
-            TimeSpan span = timeExit.Subtract(Vehicle.ArrivalTime);
+            TimeSpan span = timeExit.Subtract(vehicle.ArrivalTime);
             var spanInMinutes = span.TotalMinutes;
             var totalPrice = spanInMinutes * price / 60;
 
             //Create model for receipt
             //Add information from vehicle to model
             //Send model to Receipt View
-            var reciept = new Receipt
+            var receipt = new Receipt
             {
-                RegNo = Vehicle.RegNo,
-                VehicleType = Vehicle.VehicleType,
-                TimeEnter = Vehicle.ArrivalTime,
+                RegNo = vehicle.RegNo,
+                VehicleType = vehicle.VehicleType,
+                TimeEnter = vehicle.ArrivalTime,
                 TimeExit = timeExit,
                 Price = price,
                 PriceTotal = (int)totalPrice,
-                MemberId = Vehicle.MemberID,
-                VehicleId = Vehicle.Id
-
+                MemberId = vehicle.MemberID,
+                VehicleId = vehicle.Id
             };
 
-            _context.Add(reciept);
+            _context.Add(receipt);
             await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har checkats ut.";
             
             var model = new ReceiptViewModel
             {
                 Id = id,
-                RegNo = Vehicle.RegNo,
-                VehicleType = Vehicle.VehicleType,
-                TimeEnter = Vehicle.ArrivalTime,
+                RegNo = vehicle.RegNo,
+                VehicleType = vehicle.VehicleType,
+                TimeEnter = vehicle.ArrivalTime,
                 TimeExit = timeExit,
                 Price = price,
-                PriceTotal = (int)totalPrice,
-
+                PriceTotal = (int)totalPrice,                
+                Member = vehicle.Member
             };
-
             return View(model);
         }
 
