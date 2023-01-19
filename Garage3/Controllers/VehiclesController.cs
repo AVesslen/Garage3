@@ -156,6 +156,13 @@ namespace Garage3.Controllers
         {
             var vehicle = mapper.Map<Vehicle>(viewModel);
             vehicle.ArrivalTime = DateTime.Now;
+
+            if (_context.Vehicle.Any(v => v.RegNo == vehicle.RegNo))
+                {
+                TempData["AlertMessageFail"] = $"Det finns redan ett fordon med det angivna regnumret.";
+                return RedirectToAction(nameof(Create));
+            }
+
             _context.Add(vehicle);
             await _context.SaveChangesAsync();
             TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har registrerats.";
@@ -216,6 +223,9 @@ namespace Garage3.Controllers
                 try
                 {
                     _context.Update(vehicle);
+                    _context.Entry(vehicle).Property(m => m.RegNo).IsModified = false;        // Tillåter inte att spara ändringar på dessa properties
+                    _context.Entry(vehicle).Property(m => m.ArrivalTime).IsModified = false;
+                    _context.Entry(vehicle).Property(m => m.IsParked).IsModified = false;
                     await _context.SaveChangesAsync();
                     TempData["AlertMessage"] = $"Fordon med regnr {vehicle.RegNo} har ändrats.";
                 }
@@ -280,6 +290,15 @@ namespace Garage3.Controllers
         private bool VehicleExists(int id)
         {
           return (_context.Vehicle?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> CheckIfRegNoIsUnique(string regno)
+        {
+            if (await _context.Vehicle.AnyAsync(v => v.RegNo == regno))
+            {
+                return Json("Det finns redan ett fordon med det angivna regnumret");
+            }
+            return Json(true);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Garage3.AutoMapper
                 .ForMember(
                     dest => dest.NrOfVehicles,
                     from => from.MapFrom(m => m.Vehicles.Count));     
+            CreateMap<Member, MemberEditViewModel>().ReverseMap();
             CreateMap<Vehicle, VehicleIndexViewModel>()
                 .ForMember(
                     dest => dest.ParkedTime,

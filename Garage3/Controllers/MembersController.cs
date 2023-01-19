@@ -162,7 +162,9 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id);
+            var member = await mapper.ProjectTo<MemberEditViewModel>(_context.Member)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
             if (member == null)
             {
                 return NotFound();
@@ -170,12 +172,48 @@ namespace Garage3.Controllers
             return View(member);
         }
 
+        //// POST: Members/Edit/5       
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PersonalNo")] Member member)
+        //{
+        //    if (id != member.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(member);
+        //            await _context.SaveChangesAsync();
+        //            TempData["AlertMessage"] = "Dina ändringar har sparats.";
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!MemberExists(member.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(member);
+        //}
+
+
+
         // POST: Members/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PersonalNo")] Member member)
+        public async Task<IActionResult> Edit(int id, MemberEditViewModel viewModel)
         {
-            if (id != member.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -184,13 +222,19 @@ namespace Garage3.Controllers
             {
                 try
                 {
+                    //var mem = await _context.Member
+                    //    .FirstOrDefaultAsync (s => s.Id == id); 
+                 
+                    var member = mapper.Map<Member>(viewModel);  // Kontrollerna null
+
                     _context.Update(member);
+                    _context.Entry(member).Property(m => m.PersonalNo).IsModified = false;
                     await _context.SaveChangesAsync();
                     TempData["AlertMessage"] = "Dina ändringar har sparats.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.Id))
+                    if (!MemberExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -201,8 +245,10 @@ namespace Garage3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View(viewModel);
         }
+
+
 
         // GET: Members/Delete/5
         public async Task<IActionResult> Delete(int? id)

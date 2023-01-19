@@ -27,7 +27,7 @@ namespace Garage3
             {
                 var db = scope.ServiceProvider.GetRequiredService<Garage3Context>();
 
-                //db.Database.EnsureDeleted();    // Kommentera ev bort dessa två rader 
+                //db.Database.EnsureDeleted();    // Kommentera bort dessa två rader för att använda databasens befintliga data 
                 //db.Database.Migrate();
 
                 try
