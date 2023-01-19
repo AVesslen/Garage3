@@ -35,20 +35,32 @@ namespace Garage3.Controllers
             return View(viewModel);
         }
 
+        //public async Task<IActionResult> Search(string personalNo, string firstName, string lastName)
+        //{
+        //    var viewModel = await _context.Member
+        //        .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
+        //                (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
+        //                (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)))
+        //        .Select(m => new MemberIndexViewModel
+        //        {
+        //            Id = m.Id,
+        //            FirstName = m.FirstName,
+        //            LastName = m.LastName,                
+        //            //PersonalNo = m.PersonalNo,
+
+        //        }).ToListAsync();
+
+        //    return View(nameof(Index), viewModel);
+        //}
+
+
         public async Task<IActionResult> Search(string personalNo, string firstName, string lastName)
         {
-            var viewModel = await _context.Member
-                .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
-                        (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
-                        (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)))
-                .Select(m => new MemberIndexViewModel
-                {
-                    Id = m.Id,
-                    FirstName = m.FirstName,
-                    LastName = m.LastName,
-                    //PersonalNo = m.PersonalNo,
-
-                }).ToListAsync();
+            var viewModel = await mapper.ProjectTo<MemberIndexViewModel>(_context.Member)
+                .Where(m => 
+                        (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
+                        (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)))                
+               .ToListAsync();
 
             return View(nameof(Index), viewModel);
         }
@@ -85,7 +97,7 @@ namespace Garage3.Controllers
         // POST: Members/Create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MemberNo,FirstName,LastName,PersonalNo")] Member member)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PersonalNo")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +128,7 @@ namespace Garage3.Controllers
         // POST: Members/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MemberNo,FirstName,LastName,PersonalNo")] Member member)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PersonalNo")] Member member)
         {
             if (id != member.Id)
             {

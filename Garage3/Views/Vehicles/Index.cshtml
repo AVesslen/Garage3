@@ -74,7 +74,10 @@
                     {
                       <p>-</p>
                     }
-
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.FirstName)
+                    @Html.DisplayFor(modelItem => item.Member.LastName)
                 </td>
                 <td>
                     @if (item.IsParked == true)

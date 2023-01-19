@@ -45,8 +45,7 @@ namespace Garage3.Data.Data
                     FirstName = fName,
                     LastName = lName,                   
                     PersonalNo = personalNo,
-                    Vehicles = vehicles.ToList(),   
-                    MemberNo = memberNo,
+                    Vehicles = vehicles.ToList(),                     
                 };
 
                 members.Add(member);
