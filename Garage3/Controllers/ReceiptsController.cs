@@ -9,6 +9,8 @@ using Garage3.Core;
 using Garage3.Data;
 using Garage3.Views.Vehicles;
 using Garage3.Data.Migrations;
+using Garage3.ViewModels;
+using AutoMapper;
 
 namespace Garage3.Controllers
 {
@@ -24,9 +26,9 @@ namespace Garage3.Controllers
         // GET: Receipts
         public async Task<IActionResult> Index()
         {
-              return _context.Receipt != null ? 
-                          View(await _context.Receipt.ToListAsync()) :
-                          Problem("Entity set 'Garage3Context.Receipt'  is null.");
+            return _context.Receipt != null ?
+                        View(await _context.Receipt.ToListAsync()) :
+                        Problem("Entity set 'Garage3Context.Receipt'  is null.");
         }
 
         // GET: Receipts/Details/5
@@ -45,6 +47,26 @@ namespace Garage3.Controllers
             }
 
             return View(receipt);
+        }
+
+        public async Task<IActionResult> SearchReceipt(string RegNo, string VehicleType)
+        {
+            var viewModel = await _context.Receipt
+                         .Where(r => (string.IsNullOrEmpty(RegNo) || r.RegNo.StartsWith(RegNo)) &&
+                         (string.IsNullOrEmpty(VehicleType) || r.VehicleType.Type.Contains(VehicleType)))
+                .Select(r => new Receipt
+                {
+                    Id = r.Id,
+                    RegNo = r.RegNo,
+                    VehicleType = r.VehicleType,
+                    TimeEnter = r.TimeEnter,
+                    TimeExit = r.TimeExit,
+                    Price = r.Price,
+                    PriceTotal = r.PriceTotal,
+
+                }).ToListAsync();
+
+            return View(nameof(Index), viewModel);
         }
 
         // GET: Receipts/Create

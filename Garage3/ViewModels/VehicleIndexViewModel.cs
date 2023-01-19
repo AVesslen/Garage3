@@ -20,7 +20,7 @@ namespace Garage3.ViewModels
         [Display(Name = "Parkeringsstatus")]
         public bool IsParked { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Ägare")]
         public Member? Member { get; set; } // = new Member();
 
         [Display(Name = "Ankomsttid")]

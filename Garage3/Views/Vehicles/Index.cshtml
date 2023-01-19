@@ -33,29 +33,22 @@
     <thead>
         <tr>
             <th>
-                @*@Html.DisplayNameFor(model => model.RegNo)*@
-
+                @Html.DisplayNameFor(model => model.RegNo)
                 @*<a asp-action="Search" asp-route-sortOrder="regNo_asc">Registreringsnummer</a>*@
-
-@*                @Html.DisplayNameFor(model => model.RegNo)
-                @Html.ActionLink("Stigande/Fallande","Sort", new {sortOrder=ViewBag.RegnoSort})*@
-
-                <a asp-action="Index" asp-route-sortOrder="regNo_@(ViewData["RegNoSort"] == "asc" ? "desc" : "asc")">Registreringsnummer</a>
+                @*<a asp-action="Search" asp-route-sortOrder="ViewData["regNo_asc"]">@Html.DisplayNameFor(model => model.RegNo)</a>*@
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.VehicleType)*@
-
-                @*<a asp-action="Search" asp-route-sortOrder="vehicleType_asc">Fordonstyp</a>*@
-
                 @Html.DisplayNameFor(model => model.VehicleType)
-                @Html.ActionLink("Stigande/Fallande","Sort", new {sortOrder=ViewBag.VehicleType})
-
+                @*<a asp-action="Search" asp-route-sortOrder="regNo_asc">Fordonstyp</a>*@
+                @* <a asp-action="Search" asp-route-sortOrder="ViewData["vehicletype_asc"]">@Html.DisplayNameFor(model => model.VehicleType)</a>*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Brand)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ParkedTime)
+                @*<a asp-action="Search" asp-route-sortOrder="ParkedTime">Fordonstyp</a>*@
+                @*<a asp-action="Search" asp-route-sortOrder="ViewData["parked_asc"]">@Html.DisplayNameFor(model => model.ParkedTime)</a>*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Member)
@@ -81,7 +74,8 @@
                 <td>
                     @if (item.IsParked == true)
                     {
-                        @Html.DisplayFor(modelItem => item.ParkedTime)                   
+                        @Html.DisplayFor(modelItem => item.ParkedTime)  
+                        
                     }
                     else 
                     {

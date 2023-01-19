@@ -61,18 +61,6 @@ namespace Garage3.Controllers
                 case "name_desc":
                     members = members.OrderByDescending(m => m.LastName);
                     break;
-                case "personalNo":
-                    members = members.OrderBy(m => m.PersonalNo);
-                    break;
-                case "personalNo_desc":
-                    members = members.OrderByDescending(m => m.PersonalNo);
-                    break;
-                case "vehicle":
-                    members = members.OrderBy(m => m.Vehicles.Count);
-                    break;
-                case "vehicle_desc":
-                    members = members.OrderByDescending(m => m.Vehicles.Count);
-                    break;
                 default:
                     members = members.OrderBy(m => m.FirstName);
                     break;
