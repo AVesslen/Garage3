@@ -1,5 +1,6 @@
 ﻿using Bogus.DataSets;
 using Garage3.Core;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Garage3.ViewModels
@@ -8,22 +9,19 @@ namespace Garage3.ViewModels
     {
 
         public int Id { get; set; }
-
-        [Display(Name = "Registreringsnummer")]
+        [Remote(action: "CheckIfRegNoIsUnique", controller: "Vehicles")]
+        [Display(Name = "Registreringsnummer"), Required(ErrorMessage ="Detta fält måste fyllas i.")]
         public string RegNo { get; set; } = string.Empty;
 
-        [Display(Name = "Märke")]
+        [Display(Name = "Märke"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string Brand { get; set; } = string.Empty;
 
-        [Display(Name = "Modell")]
+        [Display(Name = "Modell"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string VehicleModel { get; set; } = string.Empty;
 
-        [Display(Name = "Färg")]
+        [Display(Name = "Färg"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string Color { get; set; } = string.Empty;
-
-        //[Display(Name = "Ankomsttid")]
-        //public DateTime ArrivalTime { get; set; }
-
+        
         [Display(Name = "Parkera direkt")]
         public bool IsParked { get; set; }
 

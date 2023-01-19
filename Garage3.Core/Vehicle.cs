@@ -17,7 +17,7 @@ namespace Garage3.Core
         [Display(Name = "Regnummer"), StringLength(25, ErrorMessage = "Ange ett korrekt regnummer."), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string RegNo { get; set; } = string.Empty;
 
-        [Display(Name = "Märke"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
+        [Display(Name = "Förnamn"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string Brand { get; set; } = string.Empty;
 
         [Display(Name = "Modell"), Required(ErrorMessage = "Detta fält måste fyllas i.")]

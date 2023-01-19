@@ -7,6 +7,15 @@
 
 <h1>Registrera</h1>
 
+
+@if (TempData["AlertMessageFail"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["AlertMessageFail"]
+    </div>
+}
+
+
 <h4>Fordon</h4>
 <hr />
 <div class="row">

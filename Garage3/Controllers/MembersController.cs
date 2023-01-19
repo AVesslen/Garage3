@@ -177,13 +177,13 @@ namespace Garage3.Controllers
             {
                 try
                 {
-                    //var member = await _context.Member
-                    //    .FirstOrDefaultAsync (s => s.Id == id);  //// Kontrollerna null
+                    //var mem = await _context.Member
+                    //    .FirstOrDefaultAsync (s => s.Id == id); 
                  
-                    var mem = mapper.Map<Member>(viewModel);
+                    var member = mapper.Map<Member>(viewModel);  // Kontrollerna null
 
-                    _context.Update(mem);
-                    _context.Entry(mem).Property(m => m.PersonalNo).IsModified = false;
+                    _context.Update(member);
+                    _context.Entry(member).Property(m => m.PersonalNo).IsModified = false;
                     await _context.SaveChangesAsync();
                     TempData["AlertMessage"] = "Dina ändringar har sparats.";
                 }
