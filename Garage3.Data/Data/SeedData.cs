@@ -36,8 +36,7 @@ namespace Garage3.Data.Data
             for (int i = 0; i < numberOfMembers; i++)
             {
                 var fName = faker.Name.FirstName();
-                var lName = faker.Name.LastName();
-                var memberNo = faker.Random.Number(1, 10000).ToString();
+                var lName = faker.Name.LastName();               
                 var personalNo = faker.Person.Personnummer();
                 var vehicles = GenerateVehicles(rnd.Next(1, 4));
 
@@ -91,19 +90,5 @@ namespace Garage3.Data.Data
 
             return vehicles;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

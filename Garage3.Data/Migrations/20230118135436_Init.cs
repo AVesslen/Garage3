@@ -17,10 +17,10 @@ namespace Garage3.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonalNo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MemberNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonalNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,7 @@ namespace Garage3.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +46,7 @@ namespace Garage3.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RegNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegNo = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VehicleModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -72,6 +72,56 @@ namespace Garage3.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Receipt",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RegNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: true),
+                    TimeEnter = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeExit = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    PriceTotal = table.Column<int>(type: "int", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Receipt", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Receipt_Member_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Member",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Receipt_VehicleType_VehicleTypeId",
+                        column: x => x.VehicleTypeId,
+                        principalTable: "VehicleType",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Receipt_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receipt_MemberId",
+                table: "Receipt",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receipt_VehicleId",
+                table: "Receipt",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receipt_VehicleTypeId",
+                table: "Receipt",
+                column: "VehicleTypeId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_MemberID",
                 table: "Vehicle",
@@ -86,6 +136,9 @@ namespace Garage3.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Receipt");
+
             migrationBuilder.DropTable(
                 name: "Vehicle");
 

@@ -3,6 +3,8 @@ using Garage3.Core;
 using System.ComponentModel.DataAnnotations;
 using Vehicle = Garage3.Core.Vehicle;
 
+#nullable disable
+
 namespace Garage3.ViewModels
 {
     public class MemberDetailsViewModel

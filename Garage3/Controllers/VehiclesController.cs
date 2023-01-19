@@ -40,6 +40,22 @@ namespace Garage3.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> Search(string RegNo, string Member, string VehicleType)
+        {
+            var viewModel = await _context.Vehicle
+                .Where(v => (string.IsNullOrEmpty(RegNo) || v.RegNo.StartsWith(RegNo)) &&
+                        (string.IsNullOrEmpty(VehicleType) || v.VehicleType.Type.Contains(VehicleType)))
+                .Select(v => new VehicleIndexViewModel
+                {
+                    Id = v.Id,
+                    RegNo = v.RegNo,
+                    VehicleType = v.VehicleType,
+
+                }).ToListAsync();
+
+            return View(nameof(Index), viewModel);
+        }
+
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)

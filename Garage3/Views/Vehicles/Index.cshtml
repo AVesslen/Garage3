@@ -17,6 +17,16 @@
     </div>
 }
 
+<form asp-action="Search">
+    <div class="input-group m-2">
+        <input type="text" name="RegNo" class="form-control" placeholder="Sök på registreringsnummer" />
+        <input type="text" name="VehicleType" class="form-control" placeholder="Sök på fordonstyp" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn btn-outline-primary">Sök</button>
+            <a asp-action="Index" class="btn btn btn-outline-secondary">Visa hela listan</a>
+        </div>
+    </div>
+</form>
 
 
 <table class="table">
@@ -66,10 +76,6 @@
                     }
 
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Member.FirstName)
-                @Html.DisplayFor(modelItem => item.Member.LastName)
-            </td>
                 <td>
                     @if (item.IsParked == true)
                     {

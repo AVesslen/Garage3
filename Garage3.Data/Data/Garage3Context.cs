@@ -13,22 +13,30 @@ namespace Garage3.Data
             : base(options)
         {
         }
-        public DbSet<Garage3.Core.Member> Member { get; set; } //= default!;
+        public DbSet<Garage3.Core.Member> Member { get; set; } = default!;
 
-        public DbSet<Garage3.Core.Vehicle> Vehicle { get; set; } //= default!;
+        public DbSet<Garage3.Core.Vehicle> Vehicle { get; set; } = default!;
 
-        public DbSet<Garage3.Core.Receipt> Receipt { get; set; } //= default!;
+        public DbSet<Garage3.Core.Receipt> Receipt { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Vehicle>()
-                .HasOne(o => o.Member)
-                .WithMany(c => c.Vehicles);
-            //.HasForeignKey(o => o.MemberID);
 
-            //modelBuilder.Entity<Receipt>()
-            //    .HasOne(o => o.Member)
-            //    .WithMany(c => c.r);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                .Entity<Receipt>()
+                .HasOne(r => r.Member)
+                .WithMany(m => m.Receipts)
+                .HasForeignKey(r => r.MemberId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder
+                .Entity<Receipt>()
+                .HasOne(r => r.Vehicle)
+                .WithMany(v => v.Receipts)
+                .HasForeignKey(r => r.VehicleId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

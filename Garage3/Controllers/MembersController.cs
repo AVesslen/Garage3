@@ -35,6 +35,25 @@ namespace Garage3.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> Search(string personalNo, string firstName, string lastName)
+        {
+            var viewModel = await _context.Member
+                .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
+                        (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
+                        (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)))
+                .Select(m => new MemberIndexViewModel
+                {
+                    Id = m.Id,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    //PersonalNo = m.PersonalNo,
+
+                }).ToListAsync();
+
+            return View(nameof(Index), viewModel);
+        }
+
+
 
         // GET: Members/Details/5   //Med AutoMapper
         public async Task<IActionResult> Details(int? id)

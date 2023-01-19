@@ -13,7 +13,6 @@ namespace Garage3.Core
     {
         public int Id { get; set; }
 
-        public string MemberNo { get; set; } = string.Empty;
 
         [Display(Name = "Förnamn"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string FirstName { get; set; } = string.Empty;
@@ -23,11 +22,9 @@ namespace Garage3.Core
         [Display(Name = "Personnummer"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
         public string PersonalNo { get; set; } = string.Empty;
 
-
         public ICollection<Vehicle> Vehicles { get; set; } // Navigation properties
 
         public ICollection<Receipt> Receipts { get; set; } // Navigation properties
-        //public Receipt Receipt { get; set; }
 
     }
 }
