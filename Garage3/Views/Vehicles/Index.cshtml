@@ -33,10 +33,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RegNo)
+                @*@Html.DisplayNameFor(model => model.RegNo)*@
+
+                @*<a asp-action="Search" asp-route-sortOrder="regNo_asc">Registreringsnummer</a>*@
+
+@*                @Html.DisplayNameFor(model => model.RegNo)
+                @Html.ActionLink("Stigande/Fallande","Sort", new {sortOrder=ViewBag.RegnoSort})*@
+
+                <a asp-action="Index" asp-route-sortOrder="regNo_@(ViewData["RegNoSort"] == "asc" ? "desc" : "asc")">Registreringsnummer</a>
             </th>
             <th>
+                @*@Html.DisplayNameFor(model => model.VehicleType)*@
+
+                @*<a asp-action="Search" asp-route-sortOrder="vehicleType_asc">Fordonstyp</a>*@
+
                 @Html.DisplayNameFor(model => model.VehicleType)
+                @Html.ActionLink("Stigande/Fallande","Sort", new {sortOrder=ViewBag.VehicleType})
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Brand)

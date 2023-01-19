@@ -33,18 +33,14 @@ namespace Garage3.Core
         public bool IsParked { get; set; }
 
         // Navigation properties
-        //[Display(Name = "Fordonstyp"), Required(ErrorMessage = "Detta fält måste fyllas i.")]
-        public VehicleType VehicleType { get; set; } // = new VehicleType();
-        //[Display(Name = "Ägare")]
-        public Member Member { get; set; } // = new Member();
+        public VehicleType VehicleType { get; set; }
+        public Member Member { get; set; }
 
         // Foreign keys
-        [Display(Name = "Ägare")]
-        public int MemberID { get; set; }
-        public int VehicleTypeID { get; set; }
+        public int MemberID { get; set; } // FK
+        public int VehicleTypeID { get; set; } // FK
 
         public ICollection<Receipt> Receipts { get; set; } // Navigation properties
-        //public Receipt Receipt { get; set; }
 
     }
 }

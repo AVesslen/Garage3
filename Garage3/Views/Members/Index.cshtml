@@ -35,13 +35,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                <a asp-action="Search" asp-route-sortOrder="ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.FirstName)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NrOfVehicles)
+                <a asp-action="Search" asp-route-sortOrder="ViewData["NrOfVehiclesSortParm"]">@Html.DisplayNameFor(model => model.NrOfVehicles)</a>
             </th>
             <th></th>
         </tr>
