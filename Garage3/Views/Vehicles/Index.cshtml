@@ -80,7 +80,7 @@
             <td>               
                 <a asp-action="Edit" asp-route-id="@item.Id">Ändra</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Avregistrera</a>
+                @*<a asp-action="Delete" asp-route-id="@item.Id">Avregistrera</a>*@
                     
                     @if (item.IsParked == true)
                     {
@@ -95,9 +95,4 @@
 }
     </tbody>
 </table>
-@if (ViewBag.ParkMessage == true)
-{
-    <div class="alert alert-success">
-        <strong>Thank you!</strong> Your query has been submitted.
-    </div>
-}
+

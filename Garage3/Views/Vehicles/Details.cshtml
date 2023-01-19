@@ -41,18 +41,42 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Color)
         </dd>
-        <dt class = "col-sm-2">
+
+
+        @if (Model.IsParked == true)
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.IsParked)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.IsParked)
+        </dd>
+        }
+        else
+        {
+         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ArrivalTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalTime)
-        </dd>
-        <dt class = "col-sm-2">
+         </dt>
+         <dd class = "col-sm-10">
+           <p>-</p>
+         </dd>
+         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IsParked)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsParked)
-        </dd>
+         </dt>
+         <dd class = "col-sm-10">
+           <p>Nej</p>
+         </dd>
+        }
+
+
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Member)
         </dt>

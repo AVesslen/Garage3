@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="MemberNo" class="control-label"></label>
-                <input asp-for="MemberNo" class="form-control" />
+                <input asp-for="MemberNo" class="form-control"/>
                 <span asp-validation-for="MemberNo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PersonalNo" class="control-label"></label>
-                <input asp-for="PersonalNo" class="form-control" />
+                <input asp-for="PersonalNo" class="form-control" readonly />
                 <span asp-validation-for="PersonalNo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,3 +47,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

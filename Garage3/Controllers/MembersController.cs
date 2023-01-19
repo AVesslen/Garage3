@@ -110,6 +110,7 @@ namespace Garage3.Controllers
                 {
                     _context.Update(member);
                     await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = "Dina ändringar har sparats.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
