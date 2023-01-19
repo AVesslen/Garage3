@@ -59,7 +59,7 @@ namespace Garage3.Controllers
             switch (sortOrder)
             {
                 case "name_desc":
-                    members = members.OrderByDescending(m => m.LastName);
+                    members = members.OrderByDescending(m => m.FirstName);
                     break;
                 default:
                     members = members.OrderBy(m => m.FirstName);
@@ -85,7 +85,7 @@ namespace Garage3.Controllers
                     Id = m.Id,
                     FirstName = m.FirstName,
                     LastName = m.LastName,
-                    NrOfVehicles = m.Vehicles.Count
+                    NrOfVehicles = m.Vehicles.Count,
                 })
                 .ToListAsync();
 
