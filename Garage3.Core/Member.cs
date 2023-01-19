@@ -12,16 +12,13 @@ namespace Garage3.Core
     {
         public int Id { get; set; }
 
-        public string MemberNo { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PersonalNo { get; set; } = string.Empty;
 
-
         public ICollection<Vehicle> Vehicles { get; set; } // Navigation properties
 
         public ICollection<Receipt> Receipts { get; set; } // Navigation properties
-        //public Receipt Receipt { get; set; }
 
     }
 }

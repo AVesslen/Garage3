@@ -17,6 +17,7 @@ namespace Garage3.ViewModels
 
         [Display(Name = "Antal registrerade fordon")]
         public int NrOfVehicles { get; set; }
+
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 
     }
