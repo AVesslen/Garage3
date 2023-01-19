@@ -100,13 +100,14 @@ namespace Garage3.Controllers
         public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
         {
             var vehicle = mapper.Map<Vehicle>(viewModel);
-            vehicle.ArrivalTime = DateTime.Now;
+           
+            vehicle.ArrivalTime = vehicle.IsParked == true?  DateTime.Now : DateTime.MinValue;  // Sätter till MinValue om fordon registreras utan direkt parkering
 
             if (_context.Vehicle.Any(v => v.RegNo == vehicle.RegNo))
                 {
                 TempData["AlertMessageFail"] = $"Det finns redan ett fordon med det angivna regnumret.";
                 return RedirectToAction(nameof(Create));
-            }
+                }
 
             _context.Add(vehicle);
             await _context.SaveChangesAsync();
@@ -241,7 +242,7 @@ namespace Garage3.Controllers
         {
             if (await _context.Vehicle.AnyAsync(v => v.RegNo == regno))
             {
-                return Json("Det finns redan ett fordon med det angivna regnumret");
+                return Json("Det finns redan ett fordon med det angivna regnumret.");
             }
             return Json(true);
         }
