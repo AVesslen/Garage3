@@ -56,6 +56,24 @@ namespace Garage3.Controllers
         //    return View(nameof(Index), viewModel);
         //}
 
+
+        //Sortering
+        //private IQueryable<Vehicle> SortMembers(IQueryable<Vehicle> vehicles, string sortOrder)
+        //{
+        //    switch (sortOrder)
+        //    {
+        //        case "name_desc":
+        //            vehicles = vehicles.OrderByDescending(m => m.VehicleType);
+        //            break;
+        //        default:
+        //            vehicles = vehicles.OrderBy(m => m.RegNo);
+        //            break;
+        //    }
+        //    return vehicles;
+        //}
+
+
+        //Sökning med sortering
         public async Task<IActionResult> Search(string RegNo, string Member, string VehicleType)
         {
             var viewModel = await mapper.ProjectTo<VehicleIndexViewModel>(_context.Vehicle)
@@ -66,6 +84,43 @@ namespace Garage3.Controllers
             return View(nameof(Index), viewModel);
         }
 
+        private IQueryable<VehicleIndexViewModel> SortMembers(IQueryable<VehicleIndexViewModel> vehicles, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "vehicletype_asc":
+                    vehicles = vehicles.OrderByDescending(m => m.VehicleType);
+                    break;
+                default:
+                    vehicles = vehicles.OrderBy(m => m.Brand);
+                    break;
+            }
+            return vehicles;
+        }
+
+        //public async Task<IActionResult> SortVehicles(string sortOrder)
+        //{
+        //    var viewModel = _context.Vehicle.AsNoTracking();
+        //    switch (sortOrder)
+        //    {
+        //        case "regNo_asc":
+        //            viewModel = viewModel.OrderBy(v => v.RegNo);
+        //            break;
+        //        case "regNo_desc":
+        //            viewModel = viewModel.OrderByDescending(v => v.RegNo);
+        //            break;
+        //        case "type_asc":
+        //            viewModel = viewModel.OrderBy(v => v.VehicleType).ThenBy(v => v.RegNo);
+        //            break;
+        //        case "type_desc":
+        //            viewModel = viewModel.OrderByDescending(v => v.VehicleType).ThenBy(v => v.RegNo);
+        //            break;
+        //        default:
+        //            viewModel = viewModel.OrderBy(v => v.RegNo);
+        //            break;
+        //    }
+        //    return View(await viewModel.ToListAsync());
+        //}
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)

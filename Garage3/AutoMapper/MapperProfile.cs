@@ -22,7 +22,7 @@ namespace Garage3.AutoMapper
             CreateMap<Vehicle, VehicleIndexViewModel>()
                 .ForMember(
                     dest => dest.ParkedTime,
-                    from => from.MapFrom(m => m.ArrivalTime.Subtract(DateTime.Now)));
+                    from => from.MapFrom(m => m.ArrivalTime.Subtract(DateTime.Now)));            
             CreateMap<Vehicle, VehicleDetailsViewModel>();
             CreateMap<Vehicle, VehicleCreateViewModel>().ReverseMap();
         }

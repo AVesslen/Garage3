@@ -15,7 +15,7 @@ namespace Garage3.Core
     {
         public int Id { get; set; }
 
-        [Display(Name = "Regnummer"), StringLength(15)]
+        [Display(Name = "Regnummer")]
         public string RegNo { get; set; } = string.Empty;
 
         [Display(Name = "Fordonstyp")]

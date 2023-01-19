@@ -39,13 +39,13 @@ namespace Garage3.Controllers
         //{
         //    var viewModel = await _context.Member
         //        .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
-        //                (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
-        //                (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)))
+        //                (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
+        //                (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)))
         //        .Select(m => new MemberIndexViewModel
         //        {
         //            Id = m.Id,
         //            FirstName = m.FirstName,
-        //            LastName = m.LastName,                
+        //            LastName = m.LastName,
         //            //PersonalNo = m.PersonalNo,
 
         //        }).ToListAsync();
@@ -54,17 +54,62 @@ namespace Garage3.Controllers
         //}
 
 
-        public async Task<IActionResult> Search(string personalNo, string firstName, string lastName)
+        private IQueryable<Member> SortMembers(IQueryable<Member> members, string sortOrder)
         {
-            var viewModel = await mapper.ProjectTo<MemberIndexViewModel>(_context.Member)
-                .Where(m => 
-                        (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
-                        (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)))                
-               .ToListAsync();
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    members = members.OrderByDescending(m => m.LastName);
+                    break;
+                default:
+                    members = members.OrderBy(m => m.FirstName);
+                    break;
+            }
+            return members;
+        }
+        public async Task<IActionResult> Search(string personalNo, string firstName, string lastName, string sortOrder)
+        {
+            var members = _context.Member
+                .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
+                        (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
+                        (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)));
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PersonalNoSortParm = sortOrder == "personalNo" ? "personalNo_desc" : "personalNo";
+            ViewBag.VehicleSortParm = sortOrder == "vehicle" ? "vehicle_desc" : "vehicle";
+            members = SortMembers(members, sortOrder);
+
+            var viewModel = await members
+                .Select(m => new MemberIndexViewModel
+                {
+                    Id = m.Id,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    NrOfVehicles = m.Vehicles.Count
+                })
+                .ToListAsync();
 
             return View(nameof(Index), viewModel);
         }
 
+
+        // GET: Members/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Member == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var member = await _context.Member
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (member == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(member);
+        //}
 
 
         // GET: Members/Details/5   //Med AutoMapper
@@ -77,7 +122,7 @@ namespace Garage3.Controllers
 
             var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)                
                 .FirstOrDefaultAsync(m => m.Id == id);
-
+           
             if (member == null)
             {
                 return NotFound();
