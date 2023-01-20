@@ -31,11 +31,12 @@
 </form>
 
 
-<table class="table">
-    <thead>
+<table class="table table-striped table table-hover">
+    <thead class="alert-success">
         <tr>
             <th>
-                <a asp-action="Search" asp-route-sortOrder="ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.FirstName)</a>
+               @* @Html.DisplayNameFor(model => model.FirstName)*@
+                <a asp-action="Search" id="SortLink" asp-route-sortOrder="ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.FirstName)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)

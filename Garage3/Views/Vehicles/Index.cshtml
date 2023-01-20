@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Parkerade fordon</h1>
+<h1>Fordon</h1>
 
 <p>
     <a asp-action="Create">Registrera fordon</a>
@@ -29,8 +29,8 @@
 </form>
 
 
-<table class="table">
-    <thead>
+<table class="table table-striped table table-hover">
+    <thead class="alert-success">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.RegNo)

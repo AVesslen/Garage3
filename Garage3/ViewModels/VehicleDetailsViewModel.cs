@@ -8,7 +8,7 @@ namespace Garage3.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "Registreringsnummer")]
+        [Display(Name = "Regnummer")]
         public string RegNo { get; set; } = string.Empty;
 
         [Display(Name = "Märke")]

@@ -59,7 +59,7 @@ namespace Garage3.Controllers
             switch (sortOrder)
             {
                 case "name_desc":
-                    members = members.OrderByDescending(m => m.LastName);
+                    members = members.OrderByDescending(m => m.FirstName);
                     break;
                 default:
                     members = members.OrderBy(m => m.FirstName);
@@ -71,8 +71,8 @@ namespace Garage3.Controllers
         {
             var members = _context.Member
                 .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
-                        (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
-                        (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)));
+                        (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
+                        (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)));
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.PersonalNoSortParm = sortOrder == "personalNo" ? "personalNo_desc" : "personalNo";
@@ -85,7 +85,7 @@ namespace Garage3.Controllers
                     Id = m.Id,
                     FirstName = m.FirstName,
                     LastName = m.LastName,
-                    NrOfVehicles = m.Vehicles.Count
+                    NrOfVehicles = m.Vehicles.Count,
                 })
                 .ToListAsync();
 
