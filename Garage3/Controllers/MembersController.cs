@@ -71,8 +71,8 @@ namespace Garage3.Controllers
         {
             var members = _context.Member
                 .Where(m => (string.IsNullOrEmpty(personalNo) || m.PersonalNo.StartsWith(personalNo)) &&
-                        (string.IsNullOrEmpty(firstName) || m.FirstName.Contains(firstName)) &&
-                        (string.IsNullOrEmpty(lastName) || m.LastName.Contains(lastName)));
+                        (string.IsNullOrEmpty(firstName) || m.FirstName.StartsWith(firstName)) &&
+                        (string.IsNullOrEmpty(lastName) || m.LastName.StartsWith(lastName)));
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.PersonalNoSortParm = sortOrder == "personalNo" ? "personalNo_desc" : "personalNo";
