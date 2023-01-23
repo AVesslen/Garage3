@@ -31,23 +31,23 @@ namespace Garage3.Controllers
                         Problem("Entity set 'Garage3Context.Receipt'  is null.");
         }
 
-        // GET: Receipts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Receipt == null)
-            {
-                return NotFound();
-            }
+        //// GET: Receipts/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var receipt = await _context.Receipt
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (receipt == null)
-            {
-                return NotFound();
-            }
+        //    var receipt = await _context.Receipt
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(receipt);
-        }
+        //    return View(receipt);
+        //}
 
         public async Task<IActionResult> SearchReceipt(string RegNo, string VehicleType)
         {
@@ -69,115 +69,115 @@ namespace Garage3.Controllers
             return View(nameof(Index), viewModel);
         }
 
-        // GET: Receipts/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: Receipts/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: Receipts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNo,TimeEnter,TimeExit,Price,PriceTotal")] Receipt receipt)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(receipt);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(receipt);
-        }
+        //// POST: Receipts/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,RegNo,TimeEnter,TimeExit,Price,PriceTotal")] Receipt receipt)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(receipt);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(receipt);
+        //}
 
-        // GET: Receipts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Receipt == null)
-            {
-                return NotFound();
-            }
+        //// GET: Receipts/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var receipt = await _context.Receipt.FindAsync(id);
-            if (receipt == null)
-            {
-                return NotFound();
-            }
-            return View(receipt);
-        }
+        //    var receipt = await _context.Receipt.FindAsync(id);
+        //    if (receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(receipt);
+        //}
 
-        // POST: Receipts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNo,TimeEnter,TimeExit,Price,PriceTotal")] Receipt receipt)
-        {
-            if (id != receipt.Id)
-            {
-                return NotFound();
-            }
+        //// POST: Receipts/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,RegNo,TimeEnter,TimeExit,Price,PriceTotal")] Receipt receipt)
+        //{
+        //    if (id != receipt.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(receipt);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReceiptExists(receipt.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(receipt);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(receipt);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ReceiptExists(receipt.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(receipt);
+        //}
 
         // GET: Receipts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Receipt == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var receipt = await _context.Receipt
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (receipt == null)
-            {
-                return NotFound();
-            }
+        //    var receipt = await _context.Receipt
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (receipt == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(receipt);
-        }
+        //    return View(receipt);
+        //}
 
-        // POST: Receipts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Receipt == null)
-            {
-                return Problem("Entity set 'Garage3Context.Receipt'  is null.");
-            }
-            var receipt = await _context.Receipt.FindAsync(id);
-            if (receipt != null)
-            {
-                _context.Receipt.Remove(receipt);
-            }
+        //// POST: Receipts/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Receipt == null)
+        //    {
+        //        return Problem("Entity set 'Garage3Context.Receipt'  is null.");
+        //    }
+        //    var receipt = await _context.Receipt.FindAsync(id);
+        //    if (receipt != null)
+        //    {
+        //        _context.Receipt.Remove(receipt);
+        //    }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
        
         public async Task<IActionResult> Receipt(int id)
@@ -244,9 +244,9 @@ namespace Garage3.Controllers
             return View(model);
         }
 
-        private bool ReceiptExists(int id)
-        {
-          return (_context.Receipt?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        //private bool ReceiptExists(int id)
+        //{
+        //  return (_context.Receipt?.Any(e => e.Id == id)).GetValueOrDefault();
+        //}
     }
 }

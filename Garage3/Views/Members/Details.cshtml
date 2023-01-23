@@ -41,8 +41,8 @@
         <dd class="col-sm-2">
             @foreach (var item in Model.Vehicles)
             {               
-                 @Html.DisplayFor(modelItem => item.Brand)
-                @*<a asp-controller="Vehicles" asp-action="Details" asp-route-id="@item.Id">@item.Brand</a>  *@                            
+                 @*@Html.DisplayFor(modelItem => item.Brand)*@
+                <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@item.Id">@item.Brand</a>                          
                 <br/>           
             }         
         </dd>        
