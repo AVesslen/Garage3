@@ -1,6 +1,6 @@
 # Garage3
 
- ASP.NET web application for a parking garage using the MVC design pattern, where the administrator should be able to register members and vehicles and other CRUD functionality.
+ ASP.NET Core web application for a parking garage using the MVC design pattern, where the administrator should be able to register members and vehicles and other CRUD functionality.
 
 A group project with a scrum-based working method in a 7-day sprint
 
